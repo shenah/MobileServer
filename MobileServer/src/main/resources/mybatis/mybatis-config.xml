@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- MyBatis 매퍼 파일에서 여기 설정된 패키지에 있는 클래스들은 패키지 이름을 생략할 수 있습니다. -->
+	<typeAliases>
+		<package name="naver.shen_aihua0126.MobileServer.domain"/>
+	</typeAliases>
+</configuration>

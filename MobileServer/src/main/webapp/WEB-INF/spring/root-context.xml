@@ -4,18 +4,21 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
-	
+
+	<!--모든 곳에서 사용할 bean을 설정하는 파일 -->
+
 	<!-- 오라클 접속정보 -->
-	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		id="dataSource">
 		<property value="oracle.jdbc.driver.OracleDriver"
 			name="driverClassName" />
-		<property value="jdbc:oracle:thin:@192.168.10.101:1521:xe"
+		<property value="jdbc:oracle:thin:@192.168.0.101:1521:xe"
 			name="url" />
 		<property value="user03" name="username" />
 		<property value="user03" name="password" />
 	</bean>
-	
+
 	<!-- Mybatis 설정 정보를 저장하는 클래스의 bean -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
 		id="sqlSessionFactory">
@@ -36,9 +39,12 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
-	
-	
+	<!-- bean을 자동생성 해주는 패키지 -->
+	<context:component-scan
+		base-package="naver.shen_aihua0126.MobileServer" />
+
 	<!-- annotation 과 xml을 같이 사용할 수 있도록 해주는 설정 -->
 	<context:annotation-config />
-		
+
+
 </beans>

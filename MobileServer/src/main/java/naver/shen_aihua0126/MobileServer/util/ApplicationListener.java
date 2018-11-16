@@ -5,23 +5,42 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import javax.annotation.PostConstruct;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ApplicationListener implements ServletContextListener {
+import naver.shen_aihua0126.MobileServer.dao.MovieDao;
+import naver.shen_aihua0126.MobileServer.domain.Movie;
 
-	// 웹 애플리케이션이 시작될 때 호출되는 메소드
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
+@Component
+public class ApplicationListener  {
 
-		// 현재 상영중 영화정보 
+	@Autowired
+	private MovieDao movieDao;
+
+	public MovieDao getMovieDao() {
+		return movieDao;
+	}
+
+	//@PostConstruct
+	public void initialize(){
+		
+		System.out.println(movieDao);
+		
+		// 현재 상영중 영화정보
+		// Thread th = new Thread(){
+		// public void run() {
+
 		try {
+			//
+			// Thread.sleep(86400000);
+
 			// 다운로드 받을 URL 생성
 			URL url = new URL(
-					"https://api.themoviedb.org/3/movie/now_playing?api_key=0d18b9a2449f2b69a2489e88dd795d91&language=ko-KR&page=1");
+					"https://api.themoviedb.org/3/movie/now_playing?api_key=0d18b9a2449f2b69a2489e88dd795d91&language=ko-KR&page=1&region=KR");
 			// URL 연결 객체 생성
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			// 옵션설정
@@ -51,23 +70,55 @@ public class ApplicationListener implements ServletContextListener {
 			JSONObject jso = new JSONObject(json);
 
 			JSONArray movies = jso.getJSONArray("results");
-			//System.out.println(movies);
-			
+			// System.out.println(movies);
+
 			// 배열을 순회
 			int i = 0;
+			Movie m = null;
+
 			while (i < movies.length()) {
+
 				JSONObject movie = movies.getJSONObject(i);
-			
+				String overview = movie.getString("overview");
+
+				if (overview.length() == 0) {
+					i = i + 1;
+					return;
+				}
+
 				int movieId = movie.getInt("id");
 				double voteAverage = movie.getDouble("vote_average");
 				String title = movie.getString("title");
 				String posterPath = movie.getString("poster_path");
-				String language = movie.getString("original_language");
+				String backdropPath = movie.get("backdrop_path").toString();
+				String originalLanguage = movie.getString("original_language");
 				String originalTitle = movie.getString("original_title");
-				Boolean adult = movie.getBoolean("adult");
-				String overview = movie.getString("overview");
+				String adult = "";
+				// Boolean Type 변경
+				if (movie.getBoolean("adult") == false) {
+					adult = "청가";
+				} else {
+					adult = "청불";
+				}
 				String releaseDate = movie.getString("release_date");
-				System.out.println(movieId + "  " + voteAverage + "  " + title + "  " + posterPath + "  " + language + "  " + originalTitle + "  " + adult + "  " + releaseDate);
+				String status = "now_playing";
+
+				m = new Movie();
+
+				m.setMovieId(movieId);
+				m.setVoteAverage(voteAverage);
+				m.setTitle(title);
+				m.setPosterPath(posterPath);
+				m.setBackdropPath(backdropPath);
+				m.setOverview(overview);
+				m.setOriginalLanguage(originalLanguage);
+				m.setOriginalTitle(originalTitle);
+				m.setAdult(adult);
+				m.setReleaseDate(releaseDate);
+				m.setStatus(status);
+				System.out.println(m);
+				int result = movieDao.update(m);
+				System.out.println(result);
 				i = i + 1;
 			}
 
@@ -75,14 +126,11 @@ public class ApplicationListener implements ServletContextListener {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-
 	}
+	
+	
+	
+	
 
-	// 웹 애플리케이션이 종료될 때 호출되는 메소드
-	@Override
-	public void contextDestroyed(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

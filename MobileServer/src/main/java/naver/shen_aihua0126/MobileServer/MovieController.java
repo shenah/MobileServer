@@ -18,8 +18,12 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 	
-	//@RequestMapping(value = "/now_playing", method = RequestMethod.GET)
-	//public List<Movie> movieList(HttpServletRequest request){
+
+	@RequestMapping(value = "/now_playing", method = RequestMethod.GET)
+	public List<Movie> movieList(HttpServletRequest request){
 		
-	//}
+		return movieService.movieList(request);
+	}
+
+	
 }

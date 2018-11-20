@@ -8,6 +8,11 @@ import naver.shen_aihua0126.MobileServer.domain.Movie;
 
 public interface MovieService {
 
+	//업데이트
+	public int movieUpdate(Movie movie);
+	//영화 정보 모두 삭제
+	public int movieDelete();
+
 	//영화 목록 가져오기
 	public List<Movie> movieList(HttpServletRequest request);
 	

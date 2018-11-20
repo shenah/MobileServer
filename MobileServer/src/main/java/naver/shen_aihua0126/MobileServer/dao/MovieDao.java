@@ -15,9 +15,13 @@ public class MovieDao {
 	private SqlSession sqlSession;
 	
 	//서버 실행시 업데이트 메소드 
-	public int update(Movie movie) {
+	public int movieUpdate(Movie movie){
 		return sqlSession.insert("movie.update", movie);
 	}
+	public int movieDelete() {
+		return sqlSession.delete("movie.movieDelete");
+	}
+	
 	//영화 목록 가져오기 
 	public List<Movie> movieList(String status) {
 		return sqlSession.selectList("movie.movieList", status);

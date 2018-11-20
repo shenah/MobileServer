@@ -12,7 +12,7 @@ public class Movie {
 	private String adult;
 	private String overview;
 	private String releaseDate;
-	private String status = "now_playing";
+	private String status;
 	public int getMovieId() {
 		return movieId;
 	}

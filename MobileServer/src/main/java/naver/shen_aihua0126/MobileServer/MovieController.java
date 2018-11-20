@@ -19,10 +19,16 @@ public class MovieController {
 	private MovieService movieService;
 	
 
-	@RequestMapping(value = "/now_playing", method = RequestMethod.GET)
+	@RequestMapping(value = {"movie/now_playing","movie/upcoming", "movie/top_rated"}, method = RequestMethod.GET)
 	public List<Movie> movieList(HttpServletRequest request){
 		
 		return movieService.movieList(request);
+	}
+	
+	@RequestMapping(value = {"movie/detail"}, method = RequestMethod.GET)
+	public Movie movieDetail(HttpServletRequest request){
+		
+		return movieService.movieDetail(request);
 	}
 
 	

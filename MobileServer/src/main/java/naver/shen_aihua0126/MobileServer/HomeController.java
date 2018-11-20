@@ -29,7 +29,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model) {
-		if (swich == true) {
+		/*if (swich == true) {
 			int re = movieService.movieDelete();
 			System.out.println(re);
 			String[] status = {
@@ -126,7 +126,7 @@ public class HomeController {
 				}
 			};
 			th.start();
-		}
+		}*/
 		return "home";
 	}
 

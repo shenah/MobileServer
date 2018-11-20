@@ -12,7 +12,11 @@ public class MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void register(Member member) {
-		sqlSession.insert("member.register", member);
+	public int register(Member member) {
+		return sqlSession.insert("member.register", member);
+	}
+	
+	public Member login(String id){
+		return sqlSession.selectOne("member.login", id);
 	}
 }

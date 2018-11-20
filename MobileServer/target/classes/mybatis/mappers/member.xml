@@ -9,7 +9,7 @@
 	</insert>
 
 	<!-- 로그인 비밀번호는 암호화 설정해서 비교 불가능 -->
-	<select id ="login" parameterType="Member" resultType="Member">
+	<select id ="login" parameterType="java.lang.String" resultType="Member">
 	select id, pw, nickname, image from member where id = #{id}
 	</select>
 </mapper>

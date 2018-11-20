@@ -36,8 +36,8 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie movieDetail(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		String movieId = request.getParameter("movieId");
+		return movieDao.movieDetail(movieId);
 	}
 
 }

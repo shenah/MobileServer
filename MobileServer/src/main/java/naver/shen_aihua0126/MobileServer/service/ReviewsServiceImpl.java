@@ -81,7 +81,6 @@ public class ReviewsServiceImpl implements ReviewsService {
 		Map<String,Object> map = new HashMap<>();
 		map.put("count", count);
 		map.put("reviews", list);
-		System.out.println(map);
 		return map;
 	}
 

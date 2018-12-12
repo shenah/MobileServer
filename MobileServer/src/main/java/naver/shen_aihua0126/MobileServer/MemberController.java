@@ -30,11 +30,14 @@ public class MemberController {
 		return map;
 	}
 	
-	@RequestMapping(value="member/login", method = RequestMethod.GET)
+	@RequestMapping(value="member/login", method = RequestMethod.POST)
 	public Map<String, Object> login(HttpServletRequest request){
+		
 		Map<String, Object> map = new HashMap<>();
 		Member member = memberService.login(request);	
 		if(member == null) {
+			member = new Member();
+			//클라이언트에서 id == "NULL"로 로그인 성공 확인 
 			member.setId("NULL");
 		}
 		

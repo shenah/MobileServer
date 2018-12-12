@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviews">
+	<!-- 댓글 추가하는 sql -->
+	<insert id="addReview" parameterType="Reviews">
+		insert into
+		reviews(memberid, movieid, movietitle, content, regdate)
+		values(#{memberId}, #{movieId}, #{movieTitle}, #{content}, now())
+	</insert>
+
+	<!-- 전체 댓글을 가져오는 sql -->
+	<select id="reviewlist" parameterType="java.lang.Integer"
+		resultType="Reviews">
+		Select rno, content, regdate, likecnt, nickname, image
+		from member m, reviews r
+		Where r.memberid = null or r.memberid = m.id and movieid = #{movieid}
+		Order by regdate desc
+	</select>
+
+	<!-- 영화별 댓글 개수 가져오기 -->
+	<select id="reviewcount" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		select count(*)
+		from reviews
+		where movieid = #{movieid}
+	</select>
+
+	<!-- 내 댓글 가져오는 sql -->
+	<select id="myreviews" parameterType="java.lang.String"
+		resultType="Reviews">
+		Select rno, content, regdate, likecnt, movietitle
+		from reviews
+		Where memberid = #{memberid}
+		Order by regdate desc
+	</select>
+	<!-- 내 댓글 개수 가져오기 -->
+	<select id="mycount" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*)
+		from reviews
+		where memberid = #{id}
+	</select>
+
+	<!-- 내 댓글 삭제는 sql -->
+	<delete id="deleteReview" parameterType="java.lang.Integer">
+		Delete from reviews where rno = #{rno}
+	</delete>
+
+	<!-- 좋아요 개수 증가하는 sql -->
+	<update id="like" parameterType="java.lang.Integer">
+		Update reviews
+		Set likecnt = likecnt + 1
+		Where rno = #{rno}
+	</update>
+	
+</mapper>

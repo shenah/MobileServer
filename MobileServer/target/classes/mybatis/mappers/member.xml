@@ -5,7 +5,7 @@
 <mapper namespace="member">
 	<!-- 회원가입 -->
 	<insert id="register" parameterType = "Member">
-		insert into members(id, pw, nickname, image) values(#{id}, #{pw}, #{nickname}, #{image})
+		insert into member(id, pw, nickname, image) values(#{id}, #{pw}, #{nickname}, #{image})
 	</insert>
 
 	<!-- 로그인 비밀번호는 암호화 설정해서 비교 불가능 -->

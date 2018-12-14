@@ -46,7 +46,7 @@ public class ReviewsController {
 	}
 	
 	// 내 댓글을 삭제하기
-	@RequestMapping(value="reviews/deletereview", method = RequestMethod.POST)
+	@RequestMapping(value="reviews/deletereview", method = RequestMethod.DELETE)
 	public Map<String, Object> deleteReview(@RequestParam("rno") int rno) {
 		Map<String, Object> map = new HashMap<>();
 		int result = reviewsService.deleteReview(rno);

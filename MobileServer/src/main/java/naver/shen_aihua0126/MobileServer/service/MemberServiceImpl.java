@@ -67,8 +67,6 @@ public class MemberServiceImpl implements MemberService {
 	public Member login(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		System.out.println(request.getParameter("id"));
-		System.out.println(request.getParameter("pw"));
 		Member member = memberDao.login(id);
 		// selectOne은 데이터가 없으면 null 리턴
 		if (member != null) {
